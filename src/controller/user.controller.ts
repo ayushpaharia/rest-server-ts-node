@@ -1,13 +1,33 @@
 import { Request, Response } from "express";
 import { omit } from "lodash";
 import log from "../logger";
-import { createUser } from "../service/user.service";
+import { createUser, getUsers } from "../service/user.service";
 
 export async function createUserHandler(req: Request, res: Response) {
   try {
     const user = await createUser(req.body);
 
     return res.send(omit(user.toJSON(), "password"));
+  } catch (err) {
+    log.error(err);
+    res.status(409).send(err.message);
+  }
+}
+export async function getUserHandler(req: Request, res: Response) {
+  try {
+    const users = await getUsers();
+
+    return res.send(
+      users.map((item) =>
+        omit(item.toJSON(), [
+          "password",
+          "_id",
+          "__v",
+          "createdAt",
+          "updatedAt",
+        ])
+      )
+    );
   } catch (err) {
     log.error(err);
     res.status(409).send(err.message);

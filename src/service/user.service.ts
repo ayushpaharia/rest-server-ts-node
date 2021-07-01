@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { DocumentDefinition } from "mongoose";
+import { DocumentDefinition, FilterQuery } from "mongoose";
 import User, { UserDocument } from "../model/user.model";
 
 export async function createUser(input: DocumentDefinition<UserDocument>) {
@@ -10,7 +10,9 @@ export async function createUser(input: DocumentDefinition<UserDocument>) {
   }
 }
 
-function findUser() {}
+export async function findUser(query: FilterQuery<UserDocument>) {
+  return User.findOne(query).lean();
+}
 
 export async function validatePassword({
   email,
@@ -28,4 +30,12 @@ export async function validatePassword({
   if (!isValid) return false;
 
   return omit(user.toJSON(), "password");
+}
+
+export async function getUsers() {
+  try {
+    return await User.find();
+  } catch (err) {
+    throw new Error(err);
+  }
 }
