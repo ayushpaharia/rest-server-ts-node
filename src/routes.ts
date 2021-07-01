@@ -13,6 +13,17 @@ import {
 } from "./schema/user.schema";
 import { validate as validateRequest, requiresUser } from "./middleware";
 import { invalidateUserSessionHandler } from "./controller/session.controller";
+import {
+  createPostSchema,
+  deletePostSchema,
+  updatePostSchema,
+} from "./schema/post.schema";
+import {
+  createPostHandler,
+  deletePostHandler,
+  getPostHandler,
+  updatePostHandler,
+} from "./controller/post.controller";
 
 export default function (app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) =>
@@ -53,4 +64,40 @@ export default function (app: Express) {
    * @desc    Logout
    */
   app.delete("/api/sessions", requiresUser, invalidateUserSessionHandler);
+
+  /**
+   * @route   POST /api/posts
+   * @desc    Create a post
+   */
+  app.post(
+    "/api/posts",
+    [requiresUser, validateRequest(createPostSchema)],
+    createPostHandler
+  );
+
+  /**
+   * @route   PUT /api/posts
+   * @desc    Update a post
+   */
+  app.put(
+    "/api/posts/:postId",
+    [requiresUser, validateRequest(updatePostSchema)],
+    updatePostHandler
+  );
+
+  /**
+   * @route   GET /api/post
+   * @desc    Update a post
+   */
+  app.put("/api/posts/:postId", getPostHandler);
+
+  /**
+   * @route   DELETE /api/posts
+   * @desc    Delete a post
+   */
+  app.delete(
+    "/api/posts/:postId",
+    [requiresUser, validateRequest(deletePostSchema)],
+    deletePostHandler
+  );
 }
