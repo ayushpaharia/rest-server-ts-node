@@ -26,7 +26,6 @@ import {
 } from "./controller/post.controller";
 
 export default function (app: Express) {
-  
   /**
    * @route   GET /api/healthcheck
    * @desc    Healthcheck API
