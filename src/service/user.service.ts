@@ -39,3 +39,13 @@ export async function getUsers() {
     throw new Error(err);
   }
 }
+
+export async function checkIfUserExists(query: FilterQuery<UserDocument>) {
+  try {
+    const user = await User.findOne({ email: query.email }).lean();
+    if (!user) return false;
+    return true;
+  } catch (err) {
+    throw new Error(err);
+  }
+}

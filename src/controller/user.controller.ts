@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
 import { omit } from "lodash";
 import log from "../logger";
-import { createUser, getUsers } from "../service/user.service";
+import {
+  checkIfUserExists,
+  createUser,
+  getUsers,
+} from "../service/user.service";
 
 export async function createUserHandler(req: Request, res: Response) {
   try {
+    if (checkIfUserExists(req.body))
+      return res.send({ message: "User with this email already exists!" });
     const user = await createUser(req.body);
 
     return res.send(omit(user.toJSON(), "password"));

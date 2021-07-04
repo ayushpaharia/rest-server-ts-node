@@ -26,6 +26,11 @@ import {
 } from "./controller/post.controller";
 
 export default function (app: Express) {
+  
+  /**
+   * @route   GET /api/healthcheck
+   * @desc    Healthcheck API
+   */
   app.get("/healthcheck", (req: Request, res: Response) =>
     res.status(200).json({ message: "API works fine" })
   );
