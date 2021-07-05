@@ -20,3 +20,11 @@ export function decode(token: string) {
     };
   }
 }
+
+// export function sendRefreshToken = (res :Response, resfreshToken :string) => {
+//   res.cookie("refreshtoken",token, {
+//     httpOnly :true,
+//     path:"/refresh_token"
+//   })
+//   return res.send(200).json({message:"Refresh token sent!"})
+// }

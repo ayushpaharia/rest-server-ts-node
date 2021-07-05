@@ -21,7 +21,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
   // Create an access token (utility)
   const accessToken = await createAccessToken({
-    user,
+    user, 
     session,
   });
 

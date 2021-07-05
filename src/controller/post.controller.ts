@@ -37,6 +37,7 @@ export async function updatePostHandler(req: Request, res: Response) {
 
   return res.send({ post: updatedPost });
 }
+
 export async function getPostHandler(req: Request, res: Response) {
   const postId = get(req, "params.postId");
   const post = await findPost({ postId });

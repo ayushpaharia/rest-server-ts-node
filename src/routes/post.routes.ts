@@ -27,18 +27,18 @@ postRoutes.post(
 );
 
 /**
- * @route   PUT /api/posts
+ * @route   PUT /api/posts/:postId
  * @desc    Update a post
  */
-postRoutes.put(
+postRoutes.get(
   "/api/posts/:postId",
   [requiresUser, validateRequest(updatePostSchema)],
   updatePostHandler
 );
 
 /**
- * @route   GET /api/post
- * @desc    Update a post
+ * @route   GET /api/posts/:postId
+ * @desc    Fetch a post
  */
 postRoutes.put("/api/posts/:postId", getPostHandler);
 
